@@ -19,7 +19,6 @@
   "containerEnv": {
     "OMO_DISABLE_POSTHOG": "1",
     "OMO_SEND_ANONYMOUS_TELEMETRY": "0",
-    "OMO_INSTALL_OPENCODE_IF_MISSING": "1",
     "XDG_CACHE_HOME": "/tmp/vscode-cache"
   },
   "postCreateCommand": "bash /workspaces/${localWorkspaceFolderBasename}/scripts/bootstrap-oh-my-openagent.sh",
