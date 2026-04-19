@@ -1,0 +1,13 @@
+Verified `.devcontainer/Dockerfile` lines 1-28 contain no `strip` invocation, no `binutils` install, and no strip guard clause. Actual guard summary: none present in this Dockerfile; the file only sets up the devcontainer base image, user, PATH, Bun install, and WORKDIR.
+
+CORRECTION [2026-04-19T10:23:09Z]: current .devcontainer/Dockerfile state
+Previous entry referenced an incorrect Dockerfile state. In the current Dockerfile there is no strip invocation and no guarded strip cleanup block; the file ends with Bun setup and  (lines 21-28), so the prior strip-strategy note does not apply to the live file.
+
+CORRECTION [2026-04-19T10:23:14Z]: current .devcontainer/Dockerfile state
+Previous entry referenced an incorrect Dockerfile state. In the current Dockerfile there is no strip invocation and no guarded strip cleanup block; the file ends with Bun setup and `WORKDIR /workspaces` (lines 21-28), so the prior strip-strategy note does not apply to the live file.
+
+CORRECTION [2026-04-19T10:23:28Z]: current .devcontainer/Dockerfile state
+Previous entries referenced an incorrect Dockerfile state. In the current .devcontainer/Dockerfile there is no strip invocation and no guarded strip cleanup block; the file ends with Bun setup and WORKDIR /workspaces on lines 21-28, so the prior strip-strategy note does not apply to the live file.
+
+CORRECTION [2026-04-19T10:27:29Z]: current /home/vscode/AWS_ArcGIS_Lambda_Layer/aws_arcgis.dockerfile state
+Previous entries referenced an incorrect Dockerfile state. Current line 58 is the guarded strip check (`if command -v strip >/dev/null 2>&1; then \`) inside the cleanup block, which skips stripping when the tool is absent.

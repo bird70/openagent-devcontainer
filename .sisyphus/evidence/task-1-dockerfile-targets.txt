@@ -1,0 +1,13 @@
+Verified `.devcontainer/Dockerfile` lines 1-28. It uses `mcr.microsoft.com/devcontainers/base:bookworm` (line 1), then installs tooling and switches to `USER ${USERNAME}` with Bun under `/home/${USERNAME}/.bun` (lines 21-26), so the runtime/platform guidance here is devcontainer/bookworm-based rather than a Lambda/amazonlinux target.
+
+CORRECTION [2026-04-19T10:23:09Z]: current .devcontainer/Dockerfile state
+Previous entry referenced an incorrect Dockerfile state. Current lines 1-4 show the build/runtime base and user context: line 1 , line 3 , and the file remains a devcontainer/bookworm setup rather than the earlier target assumption.
+
+CORRECTION [2026-04-19T10:23:14Z]: current .devcontainer/Dockerfile state
+Previous entry referenced an incorrect Dockerfile state. Current lines 1-4 show the build/runtime base and user context: line 1 `FROM mcr.microsoft.com/devcontainers/base:bookworm`, line 3 `ARG USERNAME=vscode`, and the file remains a devcontainer/bookworm setup rather than the earlier target assumption.
+
+CORRECTION [2026-04-19T10:23:28Z]: current .devcontainer/Dockerfile state
+Previous entries referenced an incorrect Dockerfile state. Current lines 1-4 of .devcontainer/Dockerfile show the devcontainer base image and user arg: line 1 FROM mcr.microsoft.com/devcontainers/base:bookworm and line 3 ARG USERNAME=vscode. This is a devcontainer/bookworm setup, not the earlier target assumption.
+
+CORRECTION [2026-04-19T10:27:29Z]: current /home/vscode/AWS_ArcGIS_Lambda_Layer/aws_arcgis.dockerfile state
+Previous entries referenced an incorrect Dockerfile state. Current lines 1-4 show the build notes for buildx linux/arm64 and Python 3.12 with 3.11 fallback, plus the amazonlinux:2023/build and Lambda runtime guidance.
