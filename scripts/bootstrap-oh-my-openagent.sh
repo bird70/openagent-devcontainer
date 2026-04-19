@@ -45,7 +45,7 @@ if ! bunx oh-my-opencode install \
   --claude=no \
   --openai=no \
   --gemini=no \
-  --copilot=no \
+  --copilot=yes \
   --opencode-go=no \
   --opencode-zen=no \
   --zai-coding-plan=no \
