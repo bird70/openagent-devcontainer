@@ -27,6 +27,14 @@ The container is intentionally narrow:
 5. Optional: set `OMO_INSTALL_OPENCODE_IF_MISSING=1` in `.devcontainer/devcontainer.json` to auto-install OpenCode during post-create.
 6. After OpenCode is installed, rerun `scripts/bootstrap-oh-my-openagent.sh` or run `bunx oh-my-opencode doctor`.
 
+## Common issues
+
+- `bash: bunx: command not found`
+	- This usually means you are in a Codespaces recovery container or Bun is not on `PATH` yet.
+	- Run `bash scripts/bootstrap-oh-my-openagent.sh` once; it now auto-installs Bun when missing.
+	- Then use the correct CLI name: `bunx oh-my-opencode ...` (not `bunx oh-my-openagent ...`).
+	- If you were put in a recovery container, rebuild/reopen the dev container after these config changes.
+
 ## Notes
 
 The repo’s install flow expects OpenCode to exist before full verification. This container keeps the plugin setup isolated, but it does not reach into your host system to install or modify OpenCode outside the dev environment.

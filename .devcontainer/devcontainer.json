@@ -12,10 +12,12 @@
     "source=omo-dev-cache,target=/home/vscode/.cache,type=volume"
   ],
   "runArgs": [
-    "--cap-drop=ALL",
     "--security-opt=no-new-privileges",
     "--pids-limit=512"
   ],
+  "remoteEnv": {
+    "PATH": "/home/vscode/.bun/bin:${containerEnv:PATH}"
+  },
   "containerEnv": {
     "OMO_DISABLE_POSTHOG": "1",
     "OMO_SEND_ANONYMOUS_TELEMETRY": "0",

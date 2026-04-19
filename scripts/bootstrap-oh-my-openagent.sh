@@ -5,11 +5,20 @@ set -euo pipefail
 export OMO_DISABLE_POSTHOG=1
 export OMO_SEND_ANONYMOUS_TELEMETRY=0
 export XDG_CACHE_HOME="${XDG_CACHE_HOME:-/tmp/vscode-cache}"
+export BUN_INSTALL="${BUN_INSTALL:-$HOME/.bun}"
+export PATH="$BUN_INSTALL/bin:$PATH"
 
 mkdir -p "$XDG_CACHE_HOME/opencode"
 
 if ! command -v bunx >/dev/null 2>&1; then
-  echo "bunx is not available in the container."
+  echo "bunx is not available. Installing Bun..."
+  curl -fsSL https://bun.sh/install | bash
+  export PATH="$BUN_INSTALL/bin:$PATH"
+fi
+
+if ! command -v bunx >/dev/null 2>&1; then
+  echo "bunx is still not available after Bun install attempt."
+  echo "Open a new terminal or ensure $BUN_INSTALL/bin is on PATH, then rerun this script."
   exit 1
 fi
 
