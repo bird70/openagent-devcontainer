@@ -1,0 +1,68 @@
+name: Verification Gates
+
+on:
+  push:
+    branches: [ main, master ]
+    paths:
+      - 'scripts/**'
+      - 'contracts/**'
+      - 'data/fixtures/**'
+      - '.github/workflows/verification-gates.yml'
+  pull_request:
+    branches: [ main, master ]
+    paths:
+      - 'scripts/**'
+      - 'contracts/**'
+      - 'data/fixtures/**'
+      - '.github/workflows/verification-gates.yml'
+  workflow_dispatch:
+
+jobs:
+  verify:
+    name: Contract + Smoke + Freshness + Latency
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Contract gate (baseline)
+      run: bash scripts/validate-contracts.sh
+
+    - name: Contract gate mismatch fixture (must fail)
+      run: |
+        if bash scripts/validate-contracts.sh contracts/fixtures/preserved-client-contracts.mismatch.json; then
+          echo "CONTRACT NEGATIVE FIXTURE FAILED: expected non-zero exit for mismatch fixture" >&2
+          exit 1
+        fi
+        echo "CONTRACT NEGATIVE FIXTURE PASSED: mismatch fixture failed as expected"
+
+    - name: Start fixture tile endpoint
+      run: |
+        perl -MIO::Socket::INET -e '$SIG{TERM}=sub{exit 0}; my $server=IO::Socket::INET->new(LocalAddr=>"127.0.0.1",LocalPort=>6767,Proto=>"tcp",Listen=>10,Reuse=>1) or die $!; while(my $client=$server->accept){ my $req=""; while(<$client>){ $req .= $_; last if $_ eq "\r\n"; } if($req =~ m{^GET\s+/tiles/0/0/0\.pbf\s+HTTP/1\.[01]}i){ my $body="fixture-mvt-bytes\n"; print $client "HTTP/1.1 200 OK\r\nContent-Type: application/x-protobuf\r\nContent-Length: ".length($body)."\r\nConnection: close\r\n\r\n$body"; } else { my $body="not found\n"; print $client "HTTP/1.1 404 Not Found\r\nContent-Type: text/plain\r\nContent-Length: ".length($body)."\r\nConnection: close\r\n\r\n$body"; } close $client; }' > /tmp/fixture-server.log 2>&1 &
+        echo $! > /tmp/fixture-server.pid
+        sleep 1
+
+    - name: Smoke gate (200 + non-empty payload)
+      run: bash scripts/ci-smoke-check.sh "http://127.0.0.1:6767/tiles/0/0/0.pbf" 1
+
+    - name: Freshness gate (healthy fixture)
+      run: NOW_EPOCH_SECONDS=1735689660 bash scripts/ci-freshness-check.sh data/fixtures/latest-fresh.json 300
+
+    - name: Freshness gate stale fixture (must fail)
+      run: |
+        if NOW_EPOCH_SECONDS=1735689660 bash scripts/ci-freshness-check.sh data/fixtures/latest-stale.json 300; then
+          echo "FRESHNESS NEGATIVE FIXTURE FAILED: expected non-zero exit for stale fixture" >&2
+          exit 1
+        fi
+        echo "FRESHNESS NEGATIVE FIXTURE PASSED: stale fixture failed as expected"
+
+    - name: Latency gate
+      run: bash scripts/ci-latency-check.sh "http://127.0.0.1:6767/tiles/0/0/0.pbf" 500
+
+    - name: Stop fixture tile endpoint
+      if: always()
+      run: |
+        if [ -f /tmp/fixture-server.pid ]; then
+          kill "$(cat /tmp/fixture-server.pid)" || true
+        fi

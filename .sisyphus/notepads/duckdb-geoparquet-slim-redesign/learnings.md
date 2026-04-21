@@ -15,3 +15,13 @@
 ### [2026-04-20] Corrected Architecture Alignment
 - Learned that the project plan specifically designates PMTiles for stable base layers and DuckDB for high-churn river-flow data. This differs from initial assumptions about using DuckDB for all GeoParquet-backed static files.
 - PMTiles offers better cost efficiency for truly stable base layers that can be served via range requests on S3.
+
+## 2026-04-21T00:42:06Z Task: redesign-ingestion-geoparquet-snapshot-publication
+- Added deterministic snapshot publisher script with explicit SNAPSHOT_TS override for reproducible test runs.
+- Atomic pointer switch implemented with temp-file + rename for manifests/latest.json, preventing partial pointer state.
+- Retention cleanup protects active_snapshot even when keep-count is lower than total available versions.
+
+## 2026-04-21T00:52:21Z Task: add-ci-verification-baseline-contract-smoke-freshness-latency
+- Added reusable CI gate scripts: scripts/ci-smoke-check.sh, scripts/ci-freshness-check.sh, and scripts/ci-latency-check.sh with explicit non-zero failure messaging.
+- Freshness check is deterministic via NOW_EPOCH_SECONDS override and supports snapshot-style UTC timestamp format (YYYYMMDDTHHMMSSZ) used by manifests/latest.json.
+- Added deterministic fixtures under data/fixtures for healthy and stale freshness paths plus a tile payload fixture to validate smoke/latency behavior.

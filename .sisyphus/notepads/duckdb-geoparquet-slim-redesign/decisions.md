@@ -17,3 +17,13 @@
 - **Decision**: Redirect base/stable vector tiles to PMTiles serving path.
 - **Decision**: Use DuckDB exclusively for high-churn, on-demand MVT generation from GeoParquet (e.g., river-flow).
 - **Rationale**: Aligns with existing plan to optimize for both high-churn performance (DuckDB) and static scale (PMTiles).
+
+## 2026-04-21T00:42:06Z Task: redesign-ingestion-geoparquet-snapshot-publication
+- Implemented two-script model: publish + cleanup, keeping responsibilities separated and deterministic.
+- Snapshot version format fixed as riverlines-<UTC timestamp> for monotonic ordering and retention by directory mtime.
+- Failure simulation handled through FAIL_BEFORE_SWITCH=1 guard before pointer write to prove no active pointer corruption.
+
+## 2026-04-21T00:52:21Z Task: add-ci-verification-baseline-contract-smoke-freshness-latency
+- Added dedicated workflow .github/workflows/verification-gates.yml instead of modifying deploy/build jobs, preserving existing pipeline behavior while introducing fail-fast verification gates.
+- Chose script-first gate architecture so smoke/contract/freshness/latency logic stays reusable across local runs and CI with identical commands and thresholds.
+- Added explicit negative-fixture checks in workflow (contract mismatch and stale manifest) to prove deterministic non-zero failure paths.

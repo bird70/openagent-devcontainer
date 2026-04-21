@@ -188,7 +188,7 @@ Wave 3: validation hardening + cutover/rollback execution artifacts
 
   **Commit**: YES | Message: `docs(architecture): define hybrid pmtiles-duckdb runtime interfaces` | Files: `[docs/**, architecture/**]`
 
-- [ ] 3. Redesign ingestion to GeoParquet snapshot publication
+- [x] 3. Redesign ingestion to GeoParquet snapshot publication
 
   **What to do**: Design and implement ingestion pipeline changes from gpkg/PostGIS load flow to GeoParquet snapshot publish flow for river updates. Include partitioning strategy, snapshot naming/versioning, atomic publish mechanism, retention policy, and metadata manifest consumed by serving runtime.
   **Must NOT do**: Do not mutate active serving snapshot files in place.
@@ -230,7 +230,7 @@ Wave 3: validation hardening + cutover/rollback execution artifacts
 
   **Commit**: YES | Message: `feat(ingest): add geoparquet snapshot publication flow` | Files: `[scripts/**, pipeline/**, docs/**]`
 
-- [ ] 4. Add CI verification baseline for contract, smoke, freshness, latency
+- [x] 4. Add CI verification baseline for contract, smoke, freshness, latency
 
   **What to do**: Add CI workflow(s) that execute automated checks: tile smoke responses, contract validation, flow-data freshness threshold check, and basic latency gate. Integrate into existing GH Actions with fail-fast behavior before deployment/cutover steps.
   **Must NOT do**: Do not rely on manual viewer checks as release gate.
