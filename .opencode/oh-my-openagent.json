@@ -1,0 +1,183 @@
+{
+  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/oh-my-opencode.schema.json",
+  "agents": {
+    "sisyphus": {
+      "model": "github-copilot/gpt-5.3-codex",
+      "variant": "max",
+      "fallback_models": [
+        {
+          "model": "github-copilot/gemini-2.5-pro",
+          "variant": "medium"
+        }
+      ]
+    },
+    "hephaestus": {
+      "model": "github-copilot/gemini-2.5-pro",
+      "variant": "medium"
+    },
+    "oracle": {
+      "model": "github-copilot/gemini-2.5-pro",
+      "variant": "high",
+      "fallback_models": [
+        {
+          "model": "github-copilot/gemini-3.1-pro-preview",
+          "variant": "high"
+        },
+        {
+          "model": "github-copilot/gpt-5.3-codex",
+          "variant": "max"
+        }
+      ]
+    },
+    "explore": {
+      "model": "github-copilot/gpt-5-mini",
+      "fallback_models": [
+        {
+          "model": "github-copilot/grok-code-fast-1"
+        }
+      ]
+    },
+    "multimodal-looker": {
+      "model": "github-copilot/gpt-5-nano"
+    },
+    "prometheus": {
+      "model": "github-copilot/gpt-5.3-codex",
+      "variant": "max",
+      "fallback_models": [
+        {
+          "model": "github-copilot/gemini-2.5-pro",
+          "variant": "high"
+        },
+        {
+          "model": "github-copilot/gemini-3.1-pro-preview"
+        }
+      ]
+    },
+    "metis": {
+      "model": "github-copilot/gpt-5.3-codex",
+      "variant": "max",
+      "fallback_models": [
+        {
+          "model": "github-copilot/gemini-2.5-pro",
+          "variant": "high"
+        }
+      ]
+    },
+    "momus": {
+      "model": "github-copilot/gemini-2.5-pro",
+      "variant": "xhigh",
+      "fallback_models": [
+        {
+          "model": "github-copilot/gpt-5.3-codex",
+          "variant": "max"
+        },
+        {
+          "model": "github-copilot/gemini-3.1-pro-preview",
+          "variant": "high"
+        }
+      ]
+    },
+    "atlas": {
+      "model": "github-copilot/gpt-5.2",
+      "fallback_models": [
+        {
+          "model": "github-copilot/gemini-2.5-pro",
+          "variant": "medium"
+        }
+      ]
+    },
+    "sisyphus-junior": {
+      "model": "github-copilot/gpt-5.2",
+      "fallback_models": [
+        {
+          "model": "github-copilot/gemini-2.5-pro",
+          "variant": "medium"
+        }
+      ]
+    }
+  },
+  "categories": {
+    "visual-engineering": {
+      "model": "github-copilot/gemini-3.1-pro-preview",
+      "variant": "high",
+      "fallback_models": [
+        {
+          "model": "github-copilot/gpt-5.3-codex",
+          "variant": "max"
+        }
+      ]
+    },
+    "ultrabrain": {
+      "model": "github-copilot/gemini-3.1-pro-preview",
+      "variant": "high",
+      "fallback_models": [
+        {
+          "model": "github-copilot/gpt-5.3-codex",
+          "variant": "max"
+        }
+      ]
+    },
+    "deep": {
+      "model": "github-copilot/gemini-2.5-pro",
+      "variant": "medium",
+      "fallback_models": [
+        {
+          "model": "github-copilot/gpt-5.3-codex",
+          "variant": "max"
+        },
+        {
+          "model": "github-copilot/gemini-3.1-pro-preview",
+          "variant": "high"
+        }
+      ]
+    },
+    "artistry": {
+      "model": "github-copilot/gemini-3.1-pro-preview",
+      "variant": "high",
+      "fallback_models": [
+        {
+          "model": "github-copilot/gpt-5.3-codex",
+          "variant": "max"
+        },
+        {
+          "model": "github-copilot/gemini-2.5-pro"
+        }
+      ]
+    },
+    "quick": {
+      "model": "github-copilot/gemini-2.5-pro-mini",
+      "fallback_models": [
+        {
+          "model": "github-copilot/claude-haiku-4.5"
+        },
+        {
+          "model": "github-copilot/gemini-3-flash-preview"
+        }
+      ]
+    },
+    "unspecified-low": {
+      "model": "github-copilot/gpt-5.2",
+      "fallback_models": [
+        {
+          "model": "github-copilot/gemini-3-flash-preview"
+        }
+      ]
+    },
+    "unspecified-high": {
+      "model": "github-copilot/gpt-5.2",
+      "fallback_models": [
+        {
+          "model": "github-copilot/gemini-3-flash-preview"
+        }
+      ]
+    },
+    "writing": {
+      "model": "github-copilot/gemini-3-flash-preview",
+      "fallback_models": [
+        {
+          "model": "github-copilot/gpt-5.2"
+        }
+      ]
+    }
+  }
+}
