@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "contract_name": "preserved-client-contracts-mismatch-fixture",
+  "description": "Deliberate mismatch fixture used to prove validator fails on contract drift.",
+  "required_files": [
+    "app/static/index.html"
+  ],
+  "checks": [
+    {
+      "kind": "tile_url_template",
+      "name": "intentional-url-mismatch",
+      "type": "substring",
+      "pattern": "/riverlinez/{z}/{x}/{y}.pbf",
+      "files": [
+        "app/static/index.html"
+      ]
+    }
+  ]
+}

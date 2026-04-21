@@ -1,0 +1,220 @@
+{
+  "schema_version": 1,
+  "contract_name": "preserved-client-contracts",
+  "description": "Machine-checkable preserved client interfaces for vector tile URL shape, source/layer identifiers, required field keys/types, and zoom bounds.",
+  "required_files": [
+    "app/trex-config.template.toml",
+    "app/static/index.html",
+    "app/demo-index.html",
+    "viewer.html",
+    "aws/viewer.html",
+    "QUICKSTART.md"
+  ],
+  "checks": [
+    {
+      "kind": "tile_url_template",
+      "name": "riverlines-template-preserved",
+      "type": "substring",
+      "pattern": "/riverlines/{z}/{x}/{y}.pbf",
+      "files": [
+        "app/static/index.html",
+        "viewer.html",
+        "aws/viewer.html",
+        "QUICKSTART.md"
+      ]
+    },
+    {
+      "kind": "tile_url_template",
+      "name": "tiles-template-preserved",
+      "type": "substring",
+      "pattern": "/tiles/{z}/{x}/{y}.pbf",
+      "files": [
+        "app/trex-config.template.toml",
+        "app/demo-index.html"
+      ]
+    },
+    {
+      "kind": "source_id",
+      "name": "riverlines-source-id",
+      "type": "all_substrings",
+      "patterns": [
+        "'riverlines': {",
+        "type: 'vector'"
+      ],
+      "files": [
+        "app/static/index.html",
+        "viewer.html",
+        "aws/viewer.html"
+      ]
+    },
+    {
+      "kind": "source_id",
+      "name": "lines-source-id",
+      "type": "all_substrings",
+      "patterns": [
+        "lines: {",
+        "type: 'vector'"
+      ],
+      "files": [
+        "app/demo-index.html"
+      ]
+    },
+    {
+      "kind": "layer_id",
+      "name": "trex-layer-lines",
+      "type": "substring",
+      "pattern": "name = \"lines\"",
+      "files": [
+        "app/trex-config.template.toml"
+      ]
+    },
+    {
+      "kind": "source_layer_id",
+      "name": "riverlines-source-layer",
+      "type": "substring",
+      "pattern": "'source-layer': 'riverlines'",
+      "files": [
+        "app/static/index.html",
+        "viewer.html",
+        "aws/viewer.html"
+      ]
+    },
+    {
+      "kind": "source_layer_id",
+      "name": "lines-source-layer",
+      "type": "substring",
+      "pattern": "'source-layer': 'lines'",
+      "files": [
+        "app/demo-index.html"
+      ]
+    },
+    {
+      "kind": "zoom_bounds",
+      "name": "riverlines-0-22",
+      "type": "all_substrings",
+      "patterns": [
+        "minzoom: 0",
+        "maxzoom: 22"
+      ],
+      "files": [
+        "app/static/index.html",
+        "aws/viewer.html"
+      ]
+    },
+    {
+      "kind": "zoom_bounds",
+      "name": "riverlines-0-14-local-viewer",
+      "type": "all_substrings",
+      "patterns": [
+        "minzoom: 0",
+        "maxzoom: 14"
+      ],
+      "files": [
+        "viewer.html"
+      ]
+    },
+    {
+      "kind": "zoom_bounds",
+      "name": "lines-4-14-demo",
+      "type": "all_substrings",
+      "patterns": [
+        "minzoom: 4",
+        "maxzoom: 14"
+      ],
+      "files": [
+        "app/demo-index.html"
+      ]
+    },
+    {
+      "kind": "zoom_bounds",
+      "name": "trex-lines-env-zoom-placeholders",
+      "type": "all_substrings",
+      "patterns": [
+        "minzoom = __MINZOOM__",
+        "maxzoom = __MAXZOOM__"
+      ],
+      "files": [
+        "app/trex-config.template.toml"
+      ]
+    },
+    {
+      "kind": "required_field",
+      "name": "streamorder:number",
+      "type": "substring",
+      "pattern": "['get', 'streamorder']",
+      "files": [
+        "app/static/index.html",
+        "viewer.html",
+        "aws/viewer.html"
+      ]
+    },
+    {
+      "kind": "required_field",
+      "name": "relativevalues95thpercentile:number",
+      "type": "substring",
+      "pattern": "['get', 'relativevalues95thpercentile']",
+      "files": [
+        "app/static/index.html",
+        "aws/viewer.html"
+      ]
+    },
+    {
+      "kind": "required_field",
+      "name": "rchid:string|number-static-aws",
+      "type": "substring",
+      "pattern": "props.rchid",
+      "files": [
+        "app/static/index.html",
+        "aws/viewer.html"
+      ]
+    },
+    {
+      "kind": "required_field",
+      "name": "rchid:string|number-viewer",
+      "type": "substring",
+      "pattern": "properties?.rchid",
+      "files": [
+        "viewer.html"
+      ]
+    },
+    {
+      "kind": "required_field",
+      "name": "id:string|number-trex-query",
+      "type": "all_substrings",
+      "patterns": [
+        "SELECT",
+        "id,"
+      ],
+      "files": [
+        "app/trex-config.template.toml"
+      ]
+    },
+    {
+      "kind": "required_field",
+      "name": "id:string|number-demo-client",
+      "type": "substring",
+      "pattern": "properties?.id",
+      "files": [
+        "app/demo-index.html"
+      ]
+    },
+    {
+      "kind": "required_field",
+      "name": "class:string-trex-query",
+      "type": "substring",
+      "pattern": "class,",
+      "files": [
+        "app/trex-config.template.toml"
+      ]
+    },
+    {
+      "kind": "required_field",
+      "name": "class:string-demo-client",
+      "type": "substring",
+      "pattern": "['get','class']",
+      "files": [
+        "app/demo-index.html"
+      ]
+    }
+  ]
+}
