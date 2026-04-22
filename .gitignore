@@ -1,0 +1,12 @@
+venv/
+.opencode/node_modules/
+.opencode/package-lock.json
+.opencode/package.json
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.env
+*.egg-info/
+dist/
+build/

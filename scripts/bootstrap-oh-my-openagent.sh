@@ -6,7 +6,7 @@ export OMO_DISABLE_POSTHOG=1
 export OMO_SEND_ANONYMOUS_TELEMETRY=0
 export XDG_CACHE_HOME="${XDG_CACHE_HOME:-/tmp/vscode-cache}"
 export BUN_INSTALL="${BUN_INSTALL:-$HOME/.bun}"
-export PATH="$BUN_INSTALL/bin:$PATH"
+export PATH="$HOME/.opencode/bin:$BUN_INSTALL/bin:$PATH"
 
 mkdir -p "$XDG_CACHE_HOME/opencode"
 
@@ -26,6 +26,8 @@ if ! command -v opencode >/dev/null 2>&1; then
   if [[ "${OMO_INSTALL_OPENCODE_IF_MISSING:-0}" == "1" ]]; then
     echo "OpenCode is not installed. Installing from https://opencode.ai/install ..."
     curl -fsSL https://opencode.ai/install | bash
+    # The installer appends to .bashrc; re-export PATH immediately for this session
+    export PATH="$HOME/.opencode/bin:$PATH"
   else
     echo "OpenCode is not installed in this container yet."
     echo "Set OMO_INSTALL_OPENCODE_IF_MISSING=1 to auto-install on postCreate,"
