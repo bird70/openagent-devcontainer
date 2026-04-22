@@ -23,14 +23,29 @@ else
 fi
 
 # --- GitHub Copilot auth ---
-# Log gh CLI in as the Copilot-capable account (niwacolours, has Claude models).
-# COPILOT_GITHUB_TOKEN should be a PAT for tilmann.steinmetz@niwa.co.nz with
-# the 'copilot' scope.  Falls back to GITHUB_TOKEN if not set.
-_copilot_token="${COPILOT_GITHUB_TOKEN:-${GITHUB_TOKEN:-}}"
-if [[ -n "$_copilot_token" ]]; then
-  echo "$_copilot_token" | gh auth login --hostname github.com --with-token 2>/dev/null || true
+# Copilot requires an OAuth token (not a PAT) — only interactive gh auth login
+# creates one.  We check if any active gh account has Copilot access by probing
+# the Copilot models endpoint; if not, we print a one-time setup reminder.
+# The Copilot account with Claude model access must be logged in via the device flow.
+# Run once in a terminal after container creation:
+#   gh auth login --hostname github.com   # follow the device flow, select your Copilot-enabled account
+if ! gh api /copilot_internal/v2/token --silent >/dev/null 2>&1; then
+  cat <<'EOF'
+
+  ┌─────────────────────────────────────────────────────────────────────────┐
+  │  GitHub Copilot login required (one-time setup)                         │
+  │                                                                         │
+  │  PATs cannot be used for Copilot — an OAuth session is needed.          │
+  │  Run the following in a terminal, then reopen opencode:                 │
+  │                                                                         │
+  │    gh auth login --hostname github.com                                  │
+  │                                                                         │
+  │  Sign in with your GitHub Copilot-enabled account.                      │
+  │  This grants Claude opus/sonnet model access via GitHub Copilot.        │
+  └─────────────────────────────────────────────────────────────────────────┘
+
+EOF
 fi
-unset _copilot_token
 
 # --- Python venv ---
 uv venv --allow-existing "${WORKSPACE}/venv"
@@ -62,6 +77,24 @@ OMO_INSTALL_OPENCODE_IF_MISSING=1 bash "${WORKSPACE}/scripts/bootstrap-oh-my-ope
 mkdir -p ~/.config/opencode "${WORKSPACE}/.opencode"
 cp "${WORKSPACE}/.devcontainer/oh-my-openagent.json" ~/.config/opencode/oh-my-openagent.json
 cp "${WORKSPACE}/.devcontainer/oh-my-openagent.json" "${WORKSPACE}/.opencode/oh-my-openagent.json"
+
+# Ensure the github-copilot provider is declared in opencode.json so opencode
+# picks up the gh CLI OAuth token automatically (no API key required).
+_oc_cfg=~/.config/opencode/opencode.json
+if [[ -f "$_oc_cfg" ]]; then
+  python3 - "$_oc_cfg" <<'PYEOF'
+import json, sys
+path = sys.argv[1]
+with open(path) as f:
+    cfg = json.load(f)
+if 'provider' not in cfg:
+    cfg['provider'] = {}
+cfg['provider']['github-copilot'] = cfg['provider'].get('github-copilot', {})
+with open(path, 'w') as f:
+    json.dump(cfg, f, indent=2)
+PYEOF
+fi
+unset _oc_cfg
 
 # Refresh model cache (opencode must be on PATH)
 opencode models --refresh || true
