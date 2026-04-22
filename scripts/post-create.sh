@@ -9,10 +9,13 @@ WORKSPACE="/workspaces/openagent-devcontainer"
 # Use GITHUB_TOKEN directly so git push/pull always uses the repo-owner account
 # (bird70) regardless of which gh account is active for Copilot.
 if [[ -n "${GITHUB_TOKEN:-}" ]]; then
+  # Use single quotes so $GITHUB_TOKEN is evaluated at credential-request time,
+  # not hardcoded at post-create time.  This way a refreshed token works without
+  # re-running post-create.sh.
   git config --global --replace-all credential.https://github.com.helper \
-    "!f() { echo username=x-access-token; echo password=${GITHUB_TOKEN}; }; f"
+    '!f() { echo username=x-access-token; echo password=$GITHUB_TOKEN; }; f'
   git config --global --replace-all credential.https://gist.github.com.helper \
-    "!f() { echo username=x-access-token; echo password=${GITHUB_TOKEN}; }; f"
+    '!f() { echo username=x-access-token; echo password=$GITHUB_TOKEN; }; f'
 else
   # Fallback: use gh CLI credential helper (works in local dev without GITHUB_TOKEN)
   gh_bin="$(which gh 2>/dev/null || true)"
