@@ -47,6 +47,7 @@ ENV PATH=/home/${USERNAME}/.local/bin:${PATH}
 RUN UV_VERSION="0.11.7" && \
   curl -fsSL "https://github.com/astral-sh/uv/releases/download/${UV_VERSION}/uv-x86_64-unknown-linux-gnu.tar.gz" -o /tmp/uv.tar.gz && \
   tar -xzf /tmp/uv.tar.gz -C /tmp && \
+  mkdir -p /home/${USERNAME}/.local/bin && \
   mv /tmp/uv-x86_64-unknown-linux-gnu/uv /home/${USERNAME}/.local/bin/uv && \
   mv /tmp/uv-x86_64-unknown-linux-gnu/uvx /home/${USERNAME}/.local/bin/uvx && \
   chmod +x /home/${USERNAME}/.local/bin/uv /home/${USERNAME}/.local/bin/uvx && \
