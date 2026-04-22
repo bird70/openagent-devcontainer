@@ -10,10 +10,9 @@ WORKSPACE="/workspaces/openagent-devcontainer"
 # the in-container gh CLI so pushes work as the correct GitHub account.
 gh_bin="$(which gh 2>/dev/null || true)"
 if [[ -n "$gh_bin" ]]; then
-  git config --global credential.https://github.com.helper ""
-  git config --global --add credential.https://github.com.helper "${gh_bin} auth git-credential"
-  git config --global credential.https://gist.github.com.helper ""
-  git config --global --add credential.https://gist.github.com.helper "${gh_bin} auth git-credential"
+  # Use --replace-all to atomically overwrite any number of existing values
+  git config --global --replace-all credential.https://github.com.helper "${gh_bin} auth git-credential"
+  git config --global --replace-all credential.https://gist.github.com.helper "${gh_bin} auth git-credential"
 fi
 
 # --- Python venv ---
