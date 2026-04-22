@@ -16,7 +16,7 @@ if [[ -n "$gh_bin" ]]; then
 fi
 
 # --- Python venv ---
-uv venv "${WORKSPACE}/venv"
+uv venv --allow-existing "${WORKSPACE}/venv"
 
 if [[ -f "${WORKSPACE}/requirements.txt" ]]; then
   uv pip install -r "${WORKSPACE}/requirements.txt"
@@ -33,6 +33,12 @@ fi
 # opencode is baked into the image; bootstrap will detect it and skip install.
 # OMO_INSTALL_OPENCODE_IF_MISSING=1 is kept as a fallback for local dev builds
 # that don't use the devcontainer image.
+# Also reinstall if the baked-in binary can't execute (e.g. musl binary on glibc host).
+if command -v opencode >/dev/null 2>&1 && ! opencode --version >/dev/null 2>&1; then
+  echo "opencode binary is present but cannot execute — reinstalling correct variant..."
+  rm -f "$(command -v opencode)"
+  hash -d opencode 2>/dev/null || true  # clear bash's command path cache
+fi
 OMO_INSTALL_OPENCODE_IF_MISSING=1 bash "${WORKSPACE}/scripts/bootstrap-oh-my-openagent.sh" || true
 
 # Deploy the versioned Copilot-only model config (overwrite what bootstrap wrote)

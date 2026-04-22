@@ -54,8 +54,9 @@ RUN UV_VERSION="0.11.7" && \
   rm -rf /tmp/uv.tar.gz /tmp/uv-x86_64-unknown-linux-gnu
 
 # Install opencode from the official GitHub release (baked into image, avoids runtime curl|bash)
+# Use the glibc (non-musl) baseline build — matches the Debian bookworm base image
 RUN OPENCODE_VERSION="1.14.20" && \
-  curl -fsSL "https://github.com/anomalyco/opencode/releases/download/v${OPENCODE_VERSION}/opencode-linux-x64-baseline-musl.tar.gz" -o /tmp/opencode.tar.gz && \
+  curl -fsSL "https://github.com/anomalyco/opencode/releases/download/v${OPENCODE_VERSION}/opencode-linux-x64-baseline.tar.gz" -o /tmp/opencode.tar.gz && \
   tar -xzf /tmp/opencode.tar.gz -C /tmp && \
   mv /tmp/opencode /home/${USERNAME}/.local/bin/opencode && \
   chmod +x /home/${USERNAME}/.local/bin/opencode && \
