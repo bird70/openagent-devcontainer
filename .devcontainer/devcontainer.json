@@ -64,7 +64,7 @@
       }
     }
   },
-  "postCreateCommand": "bash -c 'export PATH=/home/vscode/.opencode/bin:/home/vscode/.bun/bin:/home/vscode/.local/bin:$PATH && uv venv venv && ([ -f requirements.txt ] && uv pip install -r requirements.txt && uv pip install pip-audit && pip-audit || true) && OMO_INSTALL_OPENCODE_IF_MISSING=1 bash scripts/bootstrap-oh-my-openagent.sh || true && mkdir -p ~/.config/opencode .opencode && cp .devcontainer/oh-my-openagent.json ~/.config/opencode/oh-my-openagent.json && cp .devcontainer/oh-my-openagent.json .opencode/oh-my-openagent.json && opencode models --refresh || true && echo \'source /workspaces/openagent-devcontainer/venv/bin/activate\' >> ~/.bashrc'",
+  "postCreateCommand": "bash scripts/post-create.sh",
   "features": {
     "ghcr.io/devcontainers/features/github-cli": { "version": "latest" }
   }
