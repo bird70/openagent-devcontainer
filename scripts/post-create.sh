@@ -6,14 +6,31 @@ export PATH="/home/vscode/.opencode/bin:/home/vscode/.bun/bin:/home/vscode/.loca
 WORKSPACE="/workspaces/openagent-devcontainer"
 
 # --- Git credential helper ---
-# Override the Windows gh.exe credential helper (from host .gitconfig) with
-# the in-container gh CLI so pushes work as the correct GitHub account.
-gh_bin="$(which gh 2>/dev/null || true)"
-if [[ -n "$gh_bin" ]]; then
-  # Use --replace-all to atomically overwrite any number of existing values
-  git config --global --replace-all credential.https://github.com.helper "${gh_bin} auth git-credential"
-  git config --global --replace-all credential.https://gist.github.com.helper "${gh_bin} auth git-credential"
+# Use GITHUB_TOKEN directly so git push/pull always uses the repo-owner account
+# (bird70) regardless of which gh account is active for Copilot.
+if [[ -n "${GITHUB_TOKEN:-}" ]]; then
+  git config --global --replace-all credential.https://github.com.helper \
+    "!f() { echo username=x-access-token; echo password=${GITHUB_TOKEN}; }; f"
+  git config --global --replace-all credential.https://gist.github.com.helper \
+    "!f() { echo username=x-access-token; echo password=${GITHUB_TOKEN}; }; f"
+else
+  # Fallback: use gh CLI credential helper (works in local dev without GITHUB_TOKEN)
+  gh_bin="$(which gh 2>/dev/null || true)"
+  if [[ -n "$gh_bin" ]]; then
+    git config --global --replace-all credential.https://github.com.helper "${gh_bin} auth git-credential"
+    git config --global --replace-all credential.https://gist.github.com.helper "${gh_bin} auth git-credential"
+  fi
 fi
+
+# --- GitHub Copilot auth ---
+# Log gh CLI in as the Copilot-capable account (niwacolours, has Claude models).
+# COPILOT_GITHUB_TOKEN should be a PAT for tilmann.steinmetz@niwa.co.nz with
+# the 'copilot' scope.  Falls back to GITHUB_TOKEN if not set.
+_copilot_token="${COPILOT_GITHUB_TOKEN:-${GITHUB_TOKEN:-}}"
+if [[ -n "$_copilot_token" ]]; then
+  echo "$_copilot_token" | gh auth login --hostname github.com --with-token 2>/dev/null || true
+fi
+unset _copilot_token
 
 # --- Python venv ---
 uv venv --allow-existing "${WORKSPACE}/venv"

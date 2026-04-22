@@ -13,8 +13,10 @@
   ],
   "runArgs": ["--security-opt=no-new-privileges", "--pids-limit=512"],
   "remoteEnv": {
-    "PATH": "/home/vscode/.opencode/bin:/home/vscode/.bun/bin:/home/vscode/.local/bin:${containerEnv:PATH}",
-    "GITHUB_TOKEN": "${localEnv:GITHUB_TOKEN}"
+    "PATH": "/workspaces/openagent-devcontainer/venv/bin:/home/vscode/.opencode/bin:/home/vscode/.bun/bin:/home/vscode/.local/bin:${containerEnv:PATH}",
+    "VIRTUAL_ENV": "/workspaces/openagent-devcontainer/venv",
+    "GITHUB_TOKEN": "${localEnv:GITHUB_TOKEN}",
+    "COPILOT_GITHUB_TOKEN": "${localEnv:COPILOT_GITHUB_TOKEN}"
   },
   "containerEnv": {
     "OMO_DISABLE_POSTHOG": "1",
