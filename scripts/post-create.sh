@@ -3,7 +3,9 @@ set -euo pipefail
 
 export PATH="/home/vscode/.opencode/bin:/home/vscode/.bun/bin:/home/vscode/.local/bin:$PATH"
 
-WORKSPACE="/workspaces/openagent-devcontainer"
+# Resolve workspace dynamically so this script works after repo folder renames.
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+WORKSPACE="$(cd "${SCRIPT_DIR}/.." && pwd)"
 
 # --- Git credential helper ---
 # Use GITHUB_TOKEN directly so git push/pull always uses the repo-owner account

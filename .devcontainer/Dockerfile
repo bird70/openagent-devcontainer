@@ -29,11 +29,12 @@ ENV BUN_INSTALL=/home/${USERNAME}/.bun
 ENV PATH=${BUN_INSTALL}/bin:${PATH}
 
 # Install Bun from the official GitHub release (avoids curl|bash at runtime)
-RUN BUN_VERSION="1.2.13" && \
-  curl -fsSL "https://github.com/oven-sh/bun/releases/download/bun-v${BUN_VERSION}/bun-linux-x64.zip" -o /tmp/bun.zip && \
+# Use the baseline x64 build for maximum CPU compatibility in containers.
+RUN BUN_VERSION="1.3.13" && \
+  curl -fsSL "https://github.com/oven-sh/bun/releases/download/bun-v${BUN_VERSION}/bun-linux-x64-baseline.zip" -o /tmp/bun.zip && \
   unzip -q /tmp/bun.zip -d /tmp/bun-extract && \
   mkdir -p ${BUN_INSTALL}/bin && \
-  mv /tmp/bun-extract/bun-linux-x64/bun ${BUN_INSTALL}/bin/bun && \
+  find /tmp/bun-extract -type f -name bun -exec mv {} ${BUN_INSTALL}/bin/bun \; && \
   chmod +x ${BUN_INSTALL}/bin/bun && \
   rm -rf /tmp/bun.zip /tmp/bun-extract
 
@@ -63,7 +64,7 @@ RUN OPENCODE_VERSION="1.14.20" && \
   rm -f /tmp/opencode.tar.gz
 
 # Install TypeScript LSP via bun
-RUN bun install -g \
+RUN bun add -g \
   typescript \
   typescript-language-server
 
