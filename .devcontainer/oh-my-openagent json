@@ -2,7 +2,7 @@
   "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/oh-my-opencode.schema.json",
   "agents": {
     "sisyphus": {
-      "model": "github-copilot/gpt-5.3-codex",
+      "model": "github-copilot/gpt-5.2-codex"
       "variant": "max",
       "fallback_models": [
         {
@@ -12,7 +12,7 @@
       ]
     },
     "hephaestus": {
-      "model": "github-copilot/gpt-5.2",
+      "model": "github-copilot/gpt-5.2-codex",
       "variant": "medium"
     },
     "oracle": {
@@ -20,11 +20,11 @@
       "variant": "high",
       "fallback_models": [
         {
-          "model": "github-copilot/gpt-5.4-mini",
+          "model": "github-copilot/gemini-2.5-pro",
           "variant": "high"
         },
         {
-          "model": "github-copilot/gpt-5.3-codex",
+          "model": "github-copilot/gemini-3.1-pro-preview",
           "variant": "max"
         }
       ]
@@ -41,15 +41,16 @@
       "model": "github-copilot/gpt-4.1"
     },
     "prometheus": {
-      "model": "github-copilot/gpt-5.3-codex",
+      "model": "github-copilot/gemini-3.1-pro-preview",
       "variant": "max",
       "fallback_models": [
         {
-          "model": "github-copilot/gpt-5.2",
-          "variant": "high"
+          "model": "github-copilot/gpt-5.3-codex",
+          "variant": "max"
         },
         {
-          "model": "github-copilot/gpt-5.4-mini"
+          "model": "github-copilot/gpt-5.2-codex",
+          "variant": "max"
         }
       ]
     },
@@ -58,8 +59,8 @@
       "variant": "max",
       "fallback_models": [
         {
-          "model": "github-copilot/gpt-5.2",
-          "variant": "high"
+          "model": "github-copilot/gpt-5.2-codex",
+          "variant": "max"
         }
       ]
     },
@@ -68,17 +69,17 @@
       "variant": "xhigh",
       "fallback_models": [
         {
-          "model": "github-copilot/gpt-5.3-codex",
+          "model": "github-copilot/gemini-2.5-pro",
           "variant": "max"
         },
         {
           "model": "github-copilot/gpt-5.4-mini",
-          "variant": "high"
+          "variant": "max"
         }
       ]
     },
     "atlas": {
-      "model": "github-copilot/gpt-5.4-mini",
+      "model": "github-copilot/gemini-2.5-pro",
       "fallback_models": [
         {
           "model": "github-copilot/gpt-5.2",
@@ -90,7 +91,7 @@
       "model": "github-copilot/gpt-5.4-mini",
       "fallback_models": [
         {
-          "model": "github-copilot/gpt-5.2",
+          "model": "github-copilot/gpt-3-flash-preview",
           "variant": "medium"
         }
       ]
@@ -98,49 +99,46 @@
   },
   "categories": {
     "visual-engineering": {
-      "model": "github-copilot/gpt-5.4-mini",
-      "variant": "high",
+      "model": "github-copilot/gpt-5.3-codex",
+      "variant": "max",
       "fallback_models": [
         {
-          "model": "github-copilot/gpt-5.3-codex",
+          "model": "github-copilot/gemini-3.1-pro-preview",
           "variant": "max"
         }
       ]
     },
     "ultrabrain": {
-      "model": "github-copilot/gpt-5.4-mini",
-      "variant": "high",
+      "model": "github-copilot/gpt-5.3-codex",
+      "variant": "max",
       "fallback_models": [
         {
-          "model": "github-copilot/gpt-5.3-codex",
+          "model": "github-copilot/gpt-5.2-codex",
           "variant": "max"
         }
       ]
     },
     "deep": {
-      "model": "github-copilot/gpt-5.2",
-      "variant": "medium",
+      "model": "github-copilot/gemini-3.1-pro-preview",
+      "variant": "max",
       "fallback_models": [
         {
-          "model": "github-copilot/gpt-5.3-codex",
+          "model": "github-copilot/gemini-2.5-pro",
           "variant": "max"
-        },
-        {
-          "model": "github-copilot/gpt-5.4-mini",
-          "variant": "high"
         }
       ]
     },
     "artistry": {
-      "model": "github-copilot/gpt-5.4-mini",
+      "model": "github-copilot/gemini-3.1-pro-preview",
       "variant": "high",
       "fallback_models": [
         {
-          "model": "github-copilot/gpt-5.3-codex",
+          "model": "github-copilot/gemini-2.5-pro",
           "variant": "max"
         },
         {
-          "model": "github-copilot/gpt-5.2"
+          "model": "github-copilot/gpt-5.2-codex",
+          "variant": "max"
         }
       ]
     },
@@ -156,12 +154,13 @@
       "model": "github-copilot/gpt-5.2",
       "fallback_models": [
         {
-          "model": "github-copilot/gpt-5.4-mini"
+          "model": "github-copilot/gemini-3-flash-preview",
+          "variant": "medium"
         }
       ]
     },
     "unspecified-high": {
-      "model": "github-copilot/gpt-5.4-mini",
+      "model": "github-copilot/gpt-5.3-codex",
       "fallback_models": [
         {
           "model": "github-copilot/gpt-5.2"
@@ -169,7 +168,7 @@
       ]
     },
     "writing": {
-      "model": "github-copilot/gpt-4o",
+      "model": "github-copilot/gpt-5.4-mini",
       "fallback_models": [
         {
           "model": "github-copilot/gpt-4.1"

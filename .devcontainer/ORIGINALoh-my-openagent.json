@@ -2,7 +2,7 @@
   "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/oh-my-opencode.schema.json",
   "agents": {
     "sisyphus": {
-      "model": "github-copilot/gpt-5.3-codex",
+      "model": "github-copilot/claude-opus-4.6",
       "variant": "max",
       "fallback_models": [
         {
@@ -20,11 +20,11 @@
       "variant": "high",
       "fallback_models": [
         {
-          "model": "github-copilot/gpt-5.4-mini",
+          "model": "github-copilot/claude-sonnet-4.6",
           "variant": "high"
         },
         {
-          "model": "github-copilot/gpt-5.3-codex",
+          "model": "github-copilot/claude-opus-4.6",
           "variant": "max"
         }
       ]
@@ -33,7 +33,7 @@
       "model": "github-copilot/gpt-4o",
       "fallback_models": [
         {
-          "model": "github-copilot/gpt-5.4-mini"
+          "model": "github-copilot/claude-sonnet-4.6"
         }
       ]
     },
@@ -41,7 +41,7 @@
       "model": "github-copilot/gpt-4.1"
     },
     "prometheus": {
-      "model": "github-copilot/gpt-5.3-codex",
+      "model": "github-copilot/claude-opus-4.6",
       "variant": "max",
       "fallback_models": [
         {
@@ -49,12 +49,12 @@
           "variant": "high"
         },
         {
-          "model": "github-copilot/gpt-5.4-mini"
+          "model": "github-copilot/claude-sonnet-4.6"
         }
       ]
     },
     "metis": {
-      "model": "github-copilot/gpt-5.3-codex",
+      "model": "github-copilot/claude-opus-4.6",
       "variant": "max",
       "fallback_models": [
         {
@@ -68,17 +68,17 @@
       "variant": "xhigh",
       "fallback_models": [
         {
-          "model": "github-copilot/gpt-5.3-codex",
+          "model": "github-copilot/claude-opus-4.6",
           "variant": "max"
         },
         {
-          "model": "github-copilot/gpt-5.4-mini",
+          "model": "github-copilot/claude-sonnet-4.6",
           "variant": "high"
         }
       ]
     },
     "atlas": {
-      "model": "github-copilot/gpt-5.4-mini",
+      "model": "github-copilot/claude-sonnet-4.6",
       "fallback_models": [
         {
           "model": "github-copilot/gpt-5.2",
@@ -87,7 +87,7 @@
       ]
     },
     "sisyphus-junior": {
-      "model": "github-copilot/gpt-5.4-mini",
+      "model": "github-copilot/claude-sonnet-4.6",
       "fallback_models": [
         {
           "model": "github-copilot/gpt-5.2",
@@ -98,21 +98,21 @@
   },
   "categories": {
     "visual-engineering": {
-      "model": "github-copilot/gpt-5.4-mini",
+      "model": "github-copilot/claude-sonnet-4.6",
       "variant": "high",
       "fallback_models": [
         {
-          "model": "github-copilot/gpt-5.3-codex",
+          "model": "github-copilot/claude-opus-4.6",
           "variant": "max"
         }
       ]
     },
     "ultrabrain": {
-      "model": "github-copilot/gpt-5.4-mini",
+      "model": "github-copilot/claude-sonnet-4.6",
       "variant": "high",
       "fallback_models": [
         {
-          "model": "github-copilot/gpt-5.3-codex",
+          "model": "github-copilot/claude-opus-4.6",
           "variant": "max"
         }
       ]
@@ -122,21 +122,21 @@
       "variant": "medium",
       "fallback_models": [
         {
-          "model": "github-copilot/gpt-5.3-codex",
+          "model": "github-copilot/claude-opus-4.6",
           "variant": "max"
         },
         {
-          "model": "github-copilot/gpt-5.4-mini",
+          "model": "github-copilot/claude-sonnet-4.6",
           "variant": "high"
         }
       ]
     },
     "artistry": {
-      "model": "github-copilot/gpt-5.4-mini",
+      "model": "github-copilot/claude-sonnet-4.6",
       "variant": "high",
       "fallback_models": [
         {
-          "model": "github-copilot/gpt-5.3-codex",
+          "model": "github-copilot/claude-opus-4.6",
           "variant": "max"
         },
         {
@@ -148,7 +148,7 @@
       "model": "github-copilot/gpt-4o",
       "fallback_models": [
         {
-          "model": "github-copilot/gpt-5.4-mini"
+          "model": "github-copilot/claude-sonnet-4.6"
         }
       ]
     },
@@ -156,12 +156,12 @@
       "model": "github-copilot/gpt-5.2",
       "fallback_models": [
         {
-          "model": "github-copilot/gpt-5.4-mini"
+          "model": "github-copilot/claude-sonnet-4.6"
         }
       ]
     },
     "unspecified-high": {
-      "model": "github-copilot/gpt-5.4-mini",
+      "model": "github-copilot/claude-sonnet-4.6",
       "fallback_models": [
         {
           "model": "github-copilot/gpt-5.2"
@@ -177,4 +177,5 @@
       ]
     }
   }
-}
+},
+
