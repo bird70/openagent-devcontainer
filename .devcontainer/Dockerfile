@@ -39,12 +39,11 @@ ENV BUN_INSTALL=/home/${USERNAME}/.bun
 ENV PATH=${BUN_INSTALL}/bin:${PATH}
 
 # Install Bun from the official GitHub release (avoids curl|bash at runtime)
-# Use the baseline x64 build for maximum CPU compatibility in containers.
-RUN BUN_VERSION="1.3.13" && \
-  curl -fsSL "https://github.com/oven-sh/bun/releases/download/bun-v${BUN_VERSION}/bun-linux-x64-baseline.zip" -o /tmp/bun.zip && \
+RUN BUN_VERSION="1.2.13" && \
+  curl -fsSL "https://github.com/oven-sh/bun/releases/download/bun-v${BUN_VERSION}/bun-linux-x64.zip" -o /tmp/bun.zip && \
   unzip -q /tmp/bun.zip -d /tmp/bun-extract && \
   mkdir -p ${BUN_INSTALL}/bin && \
-  find /tmp/bun-extract -type f -name bun -exec mv {} ${BUN_INSTALL}/bin/bun \; && \
+  mv /tmp/bun-extract/bun-linux-x64/bun ${BUN_INSTALL}/bin/bun && \
   chmod +x ${BUN_INSTALL}/bin/bun && \
   rm -rf /tmp/bun.zip /tmp/bun-extract
 
@@ -73,10 +72,6 @@ RUN OPENCODE_VERSION="1.14.20" && \
   chmod +x /home/${USERNAME}/.local/bin/opencode && \
   rm -f /tmp/opencode.tar.gz
 
-<<<<<<< HEAD
-# Install TypeScript LSP via bun
-RUN bun add -g \
-=======
 
 # Install LSP servers globally via npm
 RUN bun install -g \
@@ -84,7 +79,6 @@ RUN bun install -g \
   yaml-language-server \
   bash-language-server \
   dockerfile-language-server-nodejs \
->>>>>>> 1e9957e (feat: add nodejs and Opencode Desktop installation to Dockerfile; enable Opencode Zen in bootstrap script)
   typescript \
   typescript-language-server \
   pyright
