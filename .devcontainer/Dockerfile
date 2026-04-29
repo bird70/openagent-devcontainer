@@ -12,6 +12,7 @@ RUN apt-get update \
   git \
   jq \
   less \
+  nodejs \
   procps \
   ripgrep \
   bubblewrap \
@@ -23,7 +24,14 @@ RUN apt-get update \
   update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.11 1 && \
   update-alternatives --install /usr/bin/python python /usr/bin/python3.11 1 && \
   ln -sf /usr/bin/fdfind /usr/local/bin/fd && \
-  rm -rf /var/lib/apt/lists/*
+
+  # Install Opencode Desktop (GUI)
+  curl -fsSL -o /tmp/opencode-ai.deb https://opencode.ai/download/stable/linux-x64-deb \
+  && apt-get update \
+  && apt-get install -y /tmp/opencode-ai.deb \
+  && rm /tmp/opencode-ai.deb \
+  && rm -rf /var/lib/apt/lists/*
+
 
 USER ${USERNAME}
 
@@ -65,10 +73,22 @@ RUN OPENCODE_VERSION="1.14.20" && \
   chmod +x /home/${USERNAME}/.local/bin/opencode && \
   rm -f /tmp/opencode.tar.gz
 
+<<<<<<< HEAD
 # Install TypeScript LSP via bun
 RUN bun add -g \
+=======
+
+# Install LSP servers globally via npm
+RUN bun install -g \
+  vscode-json-languageserver \
+  yaml-language-server \
+  bash-language-server \
+  dockerfile-language-server-nodejs \
+>>>>>>> 1e9957e (feat: add nodejs and Opencode Desktop installation to Dockerfile; enable Opencode Zen in bootstrap script)
   typescript \
-  typescript-language-server
+  typescript-language-server \
+  pyright
+
 
 # Install Python LSP server globally via uv tool
 RUN uv tool install python-lsp-server
