@@ -2,7 +2,7 @@
   "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/oh-my-opencode.schema.json",
   "agents": {
     "sisyphus": {
-      "model": "github-copilot/claude-haiku-4-5",
+      "model": "github-copilot/claude-haiku-4.5",
       "fallback_models": [
         {
           "model": "github-copilot/gemini-2.5-pro",
@@ -52,7 +52,7 @@
     "librarian": {
       "model": "github-copilot/gemini-3-flash-preview",
       "fallback_models": [
-        "github-copilot/claude-haiku-4-5",
+        "github-copilot/claude-haiku-4.5",
         {
           "model": "openrouter/openai/gpt-5.4-mini"
         }
@@ -62,7 +62,7 @@
       "model": "github-copilot/gemini-3-flash-preview",
       "fallback_models": [
         {
-          "model": "github-copilot/claude-haiku-4-5"
+          "model": "github-copilot/claude-haiku-4.5"
         },
         {
           "model": "openrouter/openai/gpt-5.4-mini"
@@ -141,7 +141,7 @@
       "variant": "medium",
       "fallback_models": [
         {
-          "model": "github-copilot/claude-haiku-4-5",
+          "model": "github-copilot/claude-haiku-4.5",
           "variant": "medium"
         },
         {
@@ -154,7 +154,7 @@
       ]
     },
     "sisyphus-junior": {
-      "model": "github-copilot/claude-haiku-4-5",
+      "model": "github-copilot/claude-haiku-4.5",
       "fallback_models": [
         {
           "model": "github-copilot/gemini-3-flash-preview"
@@ -163,7 +163,7 @@
           "model": "openrouter/openai/gpt-5.4-mini"
         },
         {
-          "model": "openrouter/anthropic/claude-haiku-4-5"
+          "model": "openrouter/anthropic/claude-haiku-4.5"
         }
       ]
     }
@@ -241,7 +241,7 @@
       "model": "github-copilot/gemini-3-flash-preview",
       "fallback_models": [
         {
-          "model": "github-copilot/claude-haiku-4-5"
+          "model": "github-copilot/claude-haiku-4.5"
         },
         {
           "model": "openrouter/openai/gpt-5.4-mini"
@@ -249,7 +249,7 @@
       ]
     },
     "unspecified-low": {
-      "model": "github-copilot/claude-haiku-4-5",
+      "model": "github-copilot/claude-haiku-4.5",
       "fallback_models": [
         {
           "model": "github-copilot/gemini-3-flash-preview"
@@ -281,7 +281,7 @@
       "model": "github-copilot/gemini-3-flash-preview",
       "fallback_models": [
         {
-          "model": "github-copilot/claude-haiku-4-5"
+          "model": "github-copilot/claude-haiku-4.5"
         },
         {
           "model": "openrouter/google/gemini-3-flash"

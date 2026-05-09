@@ -95,6 +95,11 @@ with open(path) as f:
 if 'provider' not in cfg:
     cfg['provider'] = {}
 cfg['provider']['github-copilot'] = cfg['provider'].get('github-copilot', {})
+plugins = cfg.get('plugin')
+if not isinstance(plugins, list):
+    cfg['plugin'] = ['opencode-plugin-openspec']
+elif 'opencode-plugin-openspec' not in plugins:
+    plugins.append('opencode-plugin-openspec')
 with open(path, 'w') as f:
     json.dump(cfg, f, indent=2)
 PYEOF

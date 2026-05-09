@@ -14,6 +14,8 @@ RUN apt-get update \
   less \
   procps \
   ripgrep \
+  bubblewrap \
+  socat \
   unzip \
   python3.11 \
   python3-pip \
