@@ -101,11 +101,11 @@
       ]
     },
     "metis": {
-      "model": "github-copilot/opus-4.6",
+      "model": "github-copilot/claude-opus-4.6",
       "variant": "medium",
       "fallback_models": [
         {
-          "model": "github-copilot/claude-sonnet-4.6",
+          "model": "github-copilot/claude-opus-4.7",
           "variant": "high"
         },
         {
@@ -192,7 +192,7 @@
       "variant": "high",
       "fallback_models": [
         {
-          "model": "github-copilot/claude-opus-4.6",
+          "model": "github-copilot/claude-opus-4.7",
           "variant": "medium"
         },
         {

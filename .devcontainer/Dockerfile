@@ -54,7 +54,7 @@ RUN UV_VERSION="0.11.18" && \
   rm -rf /tmp/uv.tar.gz /tmp/uv-x86_64-unknown-linux-gnu
 
 # Install Opencode
-RUN OPENCODE_VERSION="1.14.20" && \
+RUN OPENCODE_VERSION="1.15.13" && \
   curl -fsSL "https://github.com/anomalyco/opencode/releases/download/v${OPENCODE_VERSION}/opencode-linux-x64-baseline.tar.gz" -o /tmp/opencode.tar.gz && \
   tar -xzf /tmp/opencode.tar.gz -C /tmp && \
   mv /tmp/opencode /home/${USERNAME}/.local/bin/opencode && \
