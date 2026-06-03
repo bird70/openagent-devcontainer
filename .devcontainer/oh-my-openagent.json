@@ -1,5 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/oh-my-opencode.schema.json",
+  "default_run_agent": "general",
   "agents": {
     "sisyphus": {
       "model": "github-copilot/claude-haiku-4.5",

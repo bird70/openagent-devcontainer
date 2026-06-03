@@ -83,6 +83,12 @@ mkdir -p ~/.config/opencode "${WORKSPACE}/.opencode"
 cp "${WORKSPACE}/.devcontainer/oh-my-openagent.json" ~/.config/opencode/oh-my-openagent.json
 cp "${WORKSPACE}/.devcontainer/oh-my-openagent.json" "${WORKSPACE}/.opencode/oh-my-openagent.json"
 
+# Provide a stable `omo` entrypoint for muscle-memory and docs parity.
+if command -v opencode >/dev/null 2>&1; then
+  mkdir -p "$HOME/.local/bin"
+  ln -sf "$(command -v opencode)" "$HOME/.local/bin/omo"
+fi
+
 # Ensure the github-copilot provider is declared in opencode.json so opencode
 # picks up the gh CLI OAuth token automatically (no API key required).
 _oc_cfg=~/.config/opencode/opencode.json
