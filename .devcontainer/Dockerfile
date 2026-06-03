@@ -6,11 +6,17 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
+  software-properties-common \
+  && add-apt-repository -y ppa:deadsnakes/ppa \
+  && apt-get update \
+  && apt-get install -y --no-install-recommends \
   ca-certificates \
   curl \
   fd-find \
   git \
   jq \
+  socat \
+  bubblewrap \
   less \
   nodejs \
   procps \
@@ -18,11 +24,11 @@ RUN apt-get update \
   bubblewrap \
   socat \
   unzip \
-  python3.11 \
+  python3.13 \
   python3-pip \
-  python3.11-venv && \
-  update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.11 1 && \
-  update-alternatives --install /usr/bin/python python /usr/bin/python3.11 1 && \
+  python3.13-venv && \
+  update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.13 1 && \
+  update-alternatives --install /usr/bin/python python /usr/bin/python3.13 1 && \
   ln -sf /usr/bin/fdfind /usr/local/bin/fd && \
 
   # Install Opencode Desktop (GUI)
@@ -39,7 +45,7 @@ ENV BUN_INSTALL=/home/${USERNAME}/.bun
 ENV PATH=${BUN_INSTALL}/bin:${PATH}
 
 # Install Bun from the official GitHub release (avoids curl|bash at runtime)
-RUN BUN_VERSION="1.2.13" && \
+RUN BUN_VERSION="1.3.14" && \
   curl -fsSL "https://github.com/oven-sh/bun/releases/download/bun-v${BUN_VERSION}/bun-linux-x64.zip" -o /tmp/bun.zip && \
   unzip -q /tmp/bun.zip -d /tmp/bun-extract && \
   mkdir -p ${BUN_INSTALL}/bin && \
@@ -54,7 +60,7 @@ RUN ln -sf ${BUN_INSTALL}/bin/bun ${BUN_INSTALL}/bin/node
 ENV PATH=/home/${USERNAME}/.local/bin:${PATH}
 
 # Install uv from the official GitHub release (avoids curl|bash at runtime)
-RUN UV_VERSION="0.11.7" && \
+RUN UV_VERSION="0.11.18" && \
   curl -fsSL "https://github.com/astral-sh/uv/releases/download/${UV_VERSION}/uv-x86_64-unknown-linux-gnu.tar.gz" -o /tmp/uv.tar.gz && \
   tar -xzf /tmp/uv.tar.gz -C /tmp && \
   mkdir -p /home/${USERNAME}/.local/bin && \

@@ -49,7 +49,7 @@ if ! bunx oh-my-opencode install \
   --gemini=no \
   --copilot=yes \
   --opencode-go=no \
-  --opencode-zen=yes \
+  --opencode-zen=no \
   --zai-coding-plan=no \
   --kimi-for-coding=no \
   --vercel-ai-gateway=no \

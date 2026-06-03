@@ -6,8 +6,7 @@
     "opencode-plugin-openspec"
   ],
   "disabled_providers": [],
-  "enabled_providers": [
-    "github-copilot",
+  "enabled_providers": [ "github-copilot",   
     "openrouter"
   ],
   "provider": {
