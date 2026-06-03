@@ -1,8 +1,12 @@
 {
   "name": "Oh My OpenAgent Secure Dev",
+  "image": "mcr.microsoft.com/devcontainers/python:3.13-bookworm",
   "build": {
     "dockerfile": "Dockerfile",
-    "context": ".."
+    "context": "..",
+    "args": {
+      "USERNAME": "vscode"
+    }
   },
   "remoteUser": "vscode",
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",

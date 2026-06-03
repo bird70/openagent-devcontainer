@@ -1,14 +1,11 @@
-FROM mcr.microsoft.com/devcontainers/base:bookworm
+FROM mcr.microsoft.com/devcontainers/python:3.13-bookworm
 
 ARG USERNAME=vscode
 
 ENV DEBIAN_FRONTEND=noninteractive
 
+# Install system dependencies (Python dev tools already in base image)
 RUN apt-get update \
-  && apt-get install -y --no-install-recommends \
-  software-properties-common \
-  && add-apt-repository -y ppa:deadsnakes/ppa \
-  && apt-get update \
   && apt-get install -y --no-install-recommends \
   ca-certificates \
   curl \
@@ -18,33 +15,20 @@ RUN apt-get update \
   socat \
   bubblewrap \
   less \
-  nodejs \
   procps \
   ripgrep \
   bubblewrap \
   socat \
   unzip \
-  python3.13 \
-  python3-pip \
-  python3.13-venv && \
-  update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.13 1 && \
-  update-alternatives --install /usr/bin/python python /usr/bin/python3.13 1 && \
-  ln -sf /usr/bin/fdfind /usr/local/bin/fd && \
-
-  # Install Opencode Desktop (GUI)
-  curl -fsSL -o /tmp/opencode-ai.deb https://opencode.ai/download/stable/linux-x64-deb \
-  && apt-get update \
-  && apt-get install -y /tmp/opencode-ai.deb \
-  && rm /tmp/opencode-ai.deb \
+  && ln -sf /usr/bin/fdfind /usr/local/bin/fd \
   && rm -rf /var/lib/apt/lists/*
-
 
 USER ${USERNAME}
 
 ENV BUN_INSTALL=/home/${USERNAME}/.bun
 ENV PATH=${BUN_INSTALL}/bin:${PATH}
 
-# Install Bun from the official GitHub release (avoids curl|bash at runtime)
+# Install Bun from official GitHub release
 RUN BUN_VERSION="1.3.14" && \
   curl -fsSL "https://github.com/oven-sh/bun/releases/download/bun-v${BUN_VERSION}/bun-linux-x64.zip" -o /tmp/bun.zip && \
   unzip -q /tmp/bun.zip -d /tmp/bun-extract && \
@@ -53,13 +37,13 @@ RUN BUN_VERSION="1.3.14" && \
   chmod +x ${BUN_INSTALL}/bin/bun && \
   rm -rf /tmp/bun.zip /tmp/bun-extract
 
-# Symlink bun as 'node' so Node.js scripts work without a full Node install
+# Symlink bun as 'node' for Node.js script compatibility
 RUN ln -sf ${BUN_INSTALL}/bin/bun ${BUN_INSTALL}/bin/node
 
 # Add ~/.local/bin to PATH for uv-managed tools
 ENV PATH=/home/${USERNAME}/.local/bin:${PATH}
 
-# Install uv from the official GitHub release (avoids curl|bash at runtime)
+# Install uv from official GitHub release
 RUN UV_VERSION="0.11.18" && \
   curl -fsSL "https://github.com/astral-sh/uv/releases/download/${UV_VERSION}/uv-x86_64-unknown-linux-gnu.tar.gz" -o /tmp/uv.tar.gz && \
   tar -xzf /tmp/uv.tar.gz -C /tmp && \
@@ -69,8 +53,7 @@ RUN UV_VERSION="0.11.18" && \
   chmod +x /home/${USERNAME}/.local/bin/uv /home/${USERNAME}/.local/bin/uvx && \
   rm -rf /tmp/uv.tar.gz /tmp/uv-x86_64-unknown-linux-gnu
 
-# Install opencode from the official GitHub release (baked into image, avoids runtime curl|bash)
-# Use the glibc (non-musl) baseline build — matches the Debian bookworm base image
+# Install Opencode
 RUN OPENCODE_VERSION="1.14.20" && \
   curl -fsSL "https://github.com/anomalyco/opencode/releases/download/v${OPENCODE_VERSION}/opencode-linux-x64-baseline.tar.gz" -o /tmp/opencode.tar.gz && \
   tar -xzf /tmp/opencode.tar.gz -C /tmp && \
@@ -78,8 +61,7 @@ RUN OPENCODE_VERSION="1.14.20" && \
   chmod +x /home/${USERNAME}/.local/bin/opencode && \
   rm -f /tmp/opencode.tar.gz
 
-
-# Install LSP servers globally via npm
+# Install LSP servers globally via npm/bun
 RUN bun install -g \
   vscode-json-languageserver \
   yaml-language-server \
@@ -88,7 +70,6 @@ RUN bun install -g \
   typescript \
   typescript-language-server \
   pyright
-
 
 # Install Python LSP server globally via uv tool
 RUN uv tool install python-lsp-server
