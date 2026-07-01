@@ -7,6 +7,30 @@ export PATH="/home/vscode/.opencode/bin:/home/vscode/.bun/bin:/home/vscode/.loca
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 WORKSPACE="$(cd "${SCRIPT_DIR}/.." && pwd)"
 
+# Guard against duplicate rapid invocations from container lifecycle hooks.
+# Stamp is scoped to workspace+container so real rebuilds run once again.
+CONTAINER_ID="$(cat /etc/hostname 2>/dev/null || echo unknown-container)"
+STAMP_SCOPE_RAW="${WORKSPACE}|${CONTAINER_ID}"
+STAMP_SCOPE_HASH="$(printf '%s' "$STAMP_SCOPE_RAW" | sha256sum | awk '{print $1}')"
+
+LOCK_FILE="/tmp/openagent-post-create-${STAMP_SCOPE_HASH}.lock"
+exec 9>"$LOCK_FILE"
+if ! flock -n 9; then
+  echo "post-create is already running in another process; skipping duplicate run."
+  exit 0
+fi
+
+STAMP_DIR="${HOME}/.cache/openagent"
+STAMP_FILE="${STAMP_DIR}/post-create-success-${STAMP_SCOPE_HASH}.stamp"
+if [[ -f "$STAMP_FILE" ]]; then
+  echo "post-create already completed for this workspace+container; skipping."
+  exit 0
+fi
+mkdir -p "$STAMP_DIR"
+
+post_create_ok=0
+trap '[[ "$post_create_ok" -eq 1 ]] && date -u +%FT%TZ > "$STAMP_FILE"' EXIT
+
 # --- Git credential helper ---
 # Use GITHUB_TOKEN directly so git push/pull always uses the repo-owner account
 # (bird70) regardless of which gh account is active for Copilot.
@@ -36,7 +60,8 @@ if ! command -v sg >/dev/null 2>&1; then
 fi
 
 if command -v sg >/dev/null 2>&1; then
-  sg --version || true
+  # sg can emit a non-fatal postinstall warning on stderr in Bun environments.
+  sg --version 2>/dev/null || true
 fi
 
 # AST-grep CLI requires a global config file to avoid warnings on first run.
@@ -159,6 +184,5 @@ unset _tui_cfg
 # Refresh model cache (opencode must be on PATH)
 opencode models --refresh || true
 
+post_create_ok=1
 
-# Refresh model cache (opencode must be on PATH)
-opencode models --refresh || true
