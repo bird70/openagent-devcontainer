@@ -44,7 +44,7 @@ RUN ln -sf ${BUN_INSTALL}/bin/bun ${BUN_INSTALL}/bin/node
 ENV PATH=/home/${USERNAME}/.local/bin:${PATH}
 
 # Install uv from official GitHub release
-RUN UV_VERSION="0.11.18" && \
+RUN UV_VERSION="0.11.26" && \
   curl -fsSL "https://github.com/astral-sh/uv/releases/download/${UV_VERSION}/uv-x86_64-unknown-linux-gnu.tar.gz" -o /tmp/uv.tar.gz && \
   tar -xzf /tmp/uv.tar.gz -C /tmp && \
   mkdir -p /home/${USERNAME}/.local/bin && \
@@ -54,7 +54,7 @@ RUN UV_VERSION="0.11.18" && \
   rm -rf /tmp/uv.tar.gz /tmp/uv-x86_64-unknown-linux-gnu
 
 # Install Opencode
-RUN OPENCODE_VERSION="1.15.13" && \
+RUN OPENCODE_VERSION="1.17.12" && \
   curl -fsSL "https://github.com/anomalyco/opencode/releases/download/v${OPENCODE_VERSION}/opencode-linux-x64-baseline.tar.gz" -o /tmp/opencode.tar.gz && \
   tar -xzf /tmp/opencode.tar.gz -C /tmp && \
   mv /tmp/opencode /home/${USERNAME}/.local/bin/opencode && \
@@ -63,13 +63,17 @@ RUN OPENCODE_VERSION="1.15.13" && \
 
 # Install LSP servers globally via npm/bun
 RUN bun install -g \
-  vscode-json-languageserver \
-  yaml-language-server \
-  bash-language-server \
-  dockerfile-language-server-nodejs \
-  typescript \
-  typescript-language-server \
-  pyright
+vscode-json-languageserver \
+yaml-language-server \
+bash-language-server \
+dockerfile-language-server-nodejs \
+typescript \
+typescript-language-server \
+pyright \
+@ast-grep/cli
+
+# Optional hard-fail check right after that block (recommended):
+RUN sg --version
 
 # Install Python LSP server globally via uv tool
 RUN uv tool install python-lsp-server
